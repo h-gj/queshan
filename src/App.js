@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Table from './table1';
+import Table from './table';
 
 
 
