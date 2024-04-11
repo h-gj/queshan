@@ -156,7 +156,7 @@ const Table = () => { // State to store the fetched data
 
   return (
     <div style={{textAlign: "center"}}>
-      <h1>鹊山场次查询 - {selectDate}({getWeekDayDisplay()})</h1>
+      <h1>鹊山查场 - {selectDate}({getWeekDayDisplay()})</h1>
       <p>
         <span>选择日期：</span>&nbsp;&nbsp;<input type="date" onChange={e => setSelectDate(e.target.value)}></input>&nbsp;&nbsp;
         <button onClick={fetchData}>查询</button>&nbsp;&nbsp;
