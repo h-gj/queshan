@@ -170,10 +170,11 @@ const Table = () => { // State to store the fetched data
 
         
         datas.map(rows => (
-          <div>
+          <div style={{margin: "5px"}}>
           {/* {rows[0].time_str} */}
-          <div> {
-            rows.map((item, idx) => (
+
+          {
+            rows.filter(row => (new Date(selectDate).getDay() > 0 && new Date(selectDate).getDay() < 6) ? row.time_str.indexOf('2') === 0 : true).map((item, idx) => (
               <span key={
                 item.sku
               }>
@@ -200,13 +201,9 @@ const Table = () => { // State to store the fetched data
                 </span>
                 
                 }
-                
-
               </span>
             ))
           } 
-          </div>
-          <br />
           </div>
         ))
       } </div>
