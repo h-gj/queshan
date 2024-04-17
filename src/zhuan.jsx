@@ -1,7 +1,8 @@
 // Import React and Axios
 import React, {useState, useEffect, useRef} from 'react';
-import axios from 'axios';
 import { Link } from "react-router-dom";
+import copy from 'copy-to-clipboard';
+
 
 // Define your component
 const Zhuan = () => { // State to store the fetched data
@@ -41,7 +42,7 @@ const Zhuan = () => { // State to store the fetched data
 【第8场】${e} & ${d} 🆚 ${a} & ${c}
 【第9场】${b} & ${f} 🆚 ${e} & ${d}
     `
-    navigator.clipboard.writeText(text)
+    copy(text)
 
 
   }
