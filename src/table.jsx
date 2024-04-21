@@ -153,7 +153,7 @@ const Table = () => { // State to store the fetched data
   return (
     <div style={{textAlign: "center"}}>
       <Link to="/z" style={{position: "fixed", right: "1rem", top: "1rem"}}>打转</Link>
-      <h2 style={{marginBottom: "10px"}}>鹊山查场</h2>
+      <h2 class="CuzH2">鹊山查场</h2>
       <div>{selectDate} | {getWeekDayDisplay()}</div>
 
       <p class={isMobile ? "MobileStyle": ""}>

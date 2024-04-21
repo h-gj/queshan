@@ -18,8 +18,13 @@ const Zhuan = () => { // State to store the fetched data
   const [f, setF] = useState('f');
   const battleRef = useRef(null);
   const [displayBattleInfo, setDisplayBattleInfo] = useState(false);
+  const [changDiOptions, setChangDiOptions] = useState(Array.from(Array(14).keys(), n => n + 1));
 
   const handleClick = () => {
+    if (inputValue === '') {
+      alert('请先导入接龙或手动填写参赛人员')
+      return
+    }
     setDisplayBattleInfo(true)
     const values = inputValue.split(/[,\n]+/);
     const [a, b, c, d, e, f] = values;
@@ -29,8 +34,8 @@ const Zhuan = () => { // State to store the fetched data
     setD(d)
     setE(e)
     setF(f)
-    const changDi = chang ? `${guan}馆${chang}号场`: `${guan}馆`
-    const text = `对阵表 - ${changDi}
+    const changDi = chang ? `${guan}${chang}号场`: `${guan}`
+    const text = `【${changDi}】6人转对阵表
 1. ${a} & ${b} 🆚 ${c} & ${d}
 2. ${a} & ${e} 🆚 ${c} & ${f}
 3. ${b} & ${e} 🆚 ${f} & ${d}
@@ -42,21 +47,20 @@ const Zhuan = () => { // State to store the fetched data
 9. ${b} & ${f} 🆚 ${e} & ${d}
     `
     copy(text)
-
-
+    alert('复制成功')
   }
 
   const handleJieLongInput = (e) => {
     const jieLongText = e.target.value;
     // Regular expression to match names (assuming they start after a number followed by a period)
-    const regex = /\d+\.\s*([^\n【（]+)/g;
+    const regex = /\d+\.\s*([^\n【（\-\.]+)/g;
 
     // Array to store the extracted names
     const names = [];
 
     let match;
     while ((match = regex.exec(jieLongText)) !== null) {
-      names.push(match[1].trim());
+      names.push(match[1].trim().slice(0, 5));
     }
 
     // Output the extracted names
@@ -70,6 +74,10 @@ const Zhuan = () => { // State to store the fetched data
   }
 
   const handleConvertToImage = () => {
+    if (inputValue === '') {
+      alert('请先导入接龙或手动填写参赛人员')
+      return
+    }
     setDisplayBattleInfo(true);
     const values = inputValue.split(/[,\n]+/);
     const [a, b, c, d, e, f] = values;
@@ -96,6 +104,40 @@ const Zhuan = () => { // State to store the fetched data
       });
   };
 
+  const handleSelectGuan = (e) => {
+    const guan = e.target.value;
+    setGuan(e.target.value);
+    if (guan === '鹊山') {
+      const changs = Array.from(Array(14).keys(), n => n + 1);
+      setChangDiOptions(changs)
+    } else if(guan === '钓鱼台') {
+      const changs = Array.from(Array(9).keys(), n => n + 1);
+      setChangDiOptions(changs)
+    } else if(guan === '百川') {
+      const normalChangs = Array.from(Array(12).keys(), n => n + 1);
+      const changs = normalChangs.concat(['VIP1', 'VIP2'])
+      setChangDiOptions(changs)
+    } else if(guan === '早程') {
+      const changs = Array.from(Array(5).keys(), n => n + 1);
+      setChangDiOptions(changs)
+    } else if(guan === '简上') {
+      const changs = Array.from(Array(27).keys(), n => n + 1);
+      setChangDiOptions(changs)
+    } else if(guan === '陶羽') {
+      const changs = Array.from(Array(12).keys(), n => n + 1);
+      setChangDiOptions(changs)
+    } else if(guan === '龙兴') {
+      const normalChangs = Array.from(Array(9).keys(), n => n + 1);
+      const vipChangs = Array.from(Array(17).keys(), n => `v${n + 1}`);
+      const changs = normalChangs.concat(vipChangs)
+      setChangDiOptions(changs)
+    } 
+  }
+
+  // useEffect(() => {
+
+  // }, [changDiOptions])
+
   return (
     <div 
     style={{
@@ -107,13 +149,31 @@ const Zhuan = () => { // State to store the fetched data
       flexDirection: "column"
       }}
     >
-      <h1>打转 - 生成对阵表</h1>
+      <h2 class="CuzH2">打转</h2>
+      {/* <div>生成对阵表</div> */}
+      <Link to="/" style={{position: "fixed", right: "1rem", top: "1rem"}}>查场</Link>
 
-      <Link to="/">查场</Link>
+      <p class="ZhuanP">
+        <select class="ZhuanLocationInput" onChange={handleSelectGuan}>
+          <option>鹊山</option>
+          <option>钓鱼台</option>
+          <option>百川</option>
+          <option>早程</option>
+          <option>简上</option>
+          <option>龙兴</option>
+          <option>陶羽</option>
+        </select>&nbsp;
+
+        <select class="ZhuanLocationInput" onChange={e => setChang(e.target.value)}>
+        <option value="">可以不选</option>
+        {changDiOptions.map(item => (
+          <option value={item}>{item}</option>
+        ))}
+        </select>号场
+      </p>
       
-      <p> 
+      <p class="ZhuanP"> 
         <textarea 
-        // style={{textAlign: " center"}}
         placeholder="请粘贴群接龙" 
         rows={5}
         cols={40}
@@ -121,23 +181,22 @@ const Zhuan = () => { // State to store the fetched data
         ></textarea>
       </p>
 
-      <p> 
+      <p class="ZhuanP"> 
        {/* <span>* 参赛人员</span> */}
         <textarea 
         // style={{textAlign: " center"}}
-        placeholder="请输入参赛人员，一行一个" 
+        placeholder="请输入参赛人员，一行一个，目前只支持6人转" 
         rows={10}
         cols={40}
         onChange={(e) => setInputValue(e.target.value)}
         value={inputValue}
         ></textarea>
       </p>
+      
       <p>
-      <input placeholder="场馆" value={guan} onChange={(e) => setGuan(e.target.value)}></input>馆
-      <input onChange={(e) => setChang(e.target.value)}></input>号场
+        <button class="ZhuanFuncButton" onClick={handleConvertToImage}>生成并导出对阵表</button>
+        <button class="ZhuanFuncButton" onClick={handleClick}>生成并复制对阵表</button>&nbsp;&nbsp;
       </p>
-      <button onClick={handleClick}>生成并复制对阵表</button>&nbsp;&nbsp;
-      <button onClick={handleConvertToImage}>生成并导出对阵表</button>
       {displayBattleInfo ? <div ref={battleRef}>
         <p>1. {a} & {b} 🆚 {c} & {d}</p>
         <p>2. {a} & {e} 🆚 {c} & {f}</p>

@@ -47,3 +47,23 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  .ZhuanP {
+    margin: 5px;
+  }
+
+  .ZhuanLocationInput {
+    width: 6rem;
+    height: 2rem;
+    font-size: 15px;
+  }
+
+  .CuzH2 {
+    margin-bottom: 10px;
+  }
+
+  .ZhuanFuncButton {
+    width: 10rem;
+    height: 4rem;
+    font-size: 15px;
+  }
