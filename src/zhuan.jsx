@@ -182,7 +182,6 @@ const Zhuan = () => { // State to store the fetched data
       </p>
 
       <p class="ZhuanP"> 
-       {/* <span>* 参赛人员</span> */}
         <textarea 
         // style={{textAlign: " center"}}
         placeholder="请输入参赛人员，一行一个，目前只支持6人转" 
