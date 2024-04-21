@@ -170,39 +170,44 @@ const Table = () => { // State to store the fetched data
       </p>      
 
       <div> {
-
-        
         datas.map(rows => (
           <div style={{margin: "5px"}}>
-          {/* {rows[0].time_str} */}
-
           {
+            /* 工作日只展示20点及以后的场次 */
             rows.filter(row => (new Date(selectDate).getDay() > 0 && new Date(selectDate).getDay() < 6) ? row.time_str.indexOf('2') === 0 : true).map((item, idx) => (
-              <span key={
-                item.sku
-              }>
+              <span 
+              key={item.sku}
+              class="No-Break-Line"
+              >
+                {/* 20点及以后的时间点表红展示 */}
+                {idx === 0 
+                ? <span style={{width: "100px", display: "inline-block", color: item.time_str.indexOf('2') === 0 ? "red": "black"}}>{item.time_str}</span>
+                : ""}&nbsp;&nbsp;
 
-                {idx === 0 ? <span style={{color: item.time_str.indexOf('2') === 0 ? "red": "black"}}>{item.time_str}</span> : ""}&nbsp;&nbsp;
-
-
+                {/* 已定 */}
                 {item.is_lock ? 
-                
-                  <span style={{color: "gray"}}>
-                  <span>{
+                  <span 
+                  style={{color: "gray"}}
+                  class="No-Break-Line"
+                  >
+                  <span style={{whiteSpace: "nowrap", display: "inline"}}>{
                     item.field_name
                   }</span>
                   &nbsp;&nbsp;
                 </span>
-                
-                 : 
-                
-                <span style={{color: "white", backgroundColor: "green", borderRadius: "4px"}}>
-                  <span>{
+                 :
+                 /* 未定 */
+                <span 
+                style={{color: "white", backgroundColor: "green", borderRadius: "4px"}}
+                class="No-Break-Line"
+                >
+                  <span
+                  class="No-Break-Line"
+                  >{
                     item.field_name
                   }</span>
                   &nbsp;&nbsp;
                 </span>
-                
                 }
               </span>
             ))

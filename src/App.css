@@ -37,6 +37,7 @@
     }
   }
 
-  /* .emoji {
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", "Android Emoji", "EmojiSymbols";
-  } */
+  .No-Break-Line {
+    white-space: nowrap;
+    display: inline;
+  }

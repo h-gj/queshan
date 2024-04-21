@@ -17,8 +17,10 @@ const Zhuan = () => { // State to store the fetched data
   const [e, setE] = useState('e');
   const [f, setF] = useState('f');
   const battleRef = useRef(null);
+  const [displayBattleInfo, setDisplayBattleInfo] = useState(false);
 
   const handleClick = () => {
+    setDisplayBattleInfo(true)
     const values = inputValue.split(/[,\n]+/);
     const [a, b, c, d, e, f] = values;
     setA(a)
@@ -68,6 +70,7 @@ const Zhuan = () => { // State to store the fetched data
   }
 
   const handleConvertToImage = () => {
+    setDisplayBattleInfo(true);
     const values = inputValue.split(/[,\n]+/);
     const [a, b, c, d, e, f] = values;
     setA(a)
@@ -94,7 +97,16 @@ const Zhuan = () => { // State to store the fetched data
   };
 
   return (
-    <div style={{textAlign: "center"}}>
+    <div 
+    style={{
+      // textAlign: "center",
+      display: "flex",
+      // justifyContent: "center", /* Horizontal centering */
+      alignItems: "center", /* Vertical centering */
+      height: "100vh", /* Adjust as needed */
+      flexDirection: "column"
+      }}
+    >
       <h1>打转 - 生成对阵表</h1>
 
       <Link to="/">查场</Link>
@@ -110,6 +122,7 @@ const Zhuan = () => { // State to store the fetched data
       </p>
 
       <p> 
+       {/* <span>* 参赛人员</span> */}
         <textarea 
         // style={{textAlign: " center"}}
         placeholder="请输入参赛人员，一行一个" 
@@ -123,9 +136,9 @@ const Zhuan = () => { // State to store the fetched data
       <input placeholder="场馆" value={guan} onChange={(e) => setGuan(e.target.value)}></input>馆
       <input onChange={(e) => setChang(e.target.value)}></input>号场
       </p>
-      <button onClick={handleClick}>生成并复制对阵表</button>
+      <button onClick={handleClick}>生成并复制对阵表</button>&nbsp;&nbsp;
       <button onClick={handleConvertToImage}>生成并导出对阵表</button>
-      <div ref={battleRef}>
+      {displayBattleInfo ? <div ref={battleRef}>
         <p>1. {a} & {b} 🆚 {c} & {d}</p>
         <p>2. {a} & {e} 🆚 {c} & {f}</p>
         <p>3. {b} & {e} 🆚 {f} & {d}</p>
@@ -135,7 +148,7 @@ const Zhuan = () => { // State to store the fetched data
         <p>7. {a} & {c} 🆚 {b} & {f}</p>
         <p>8. {e} & {d} 🆚 {a} & {c}</p>
         <p>9. {b} & {f} 🆚 {e} & {d}</p>
-      </div>
+      </div>: null}
 
     </div>
   );
