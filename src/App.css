@@ -49,7 +49,8 @@
   }
 
   .ZhuanP {
-    margin: 5px;
+    /* margin: 0 auto; */
+    /* width: 40rem; */
   }
 
   .ZhuanLocationInput {
@@ -67,3 +68,49 @@
     height: 4rem;
     font-size: 15px;
   }
+
+  .suggestions {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+  
+  .suggestions li {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .suggestions li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .selectedItemBox {
+    margin-bottom: 0.8rem;
+    font-size: 18px;
+  }
+
+  .selectedItem {
+    margin-right: 0.3rem;
+    border: 5 solid red;
+    position: relative;
+    margin-bottom: 23px;
+  }
+  
+  .deleteIcon {
+    position: relative;
+    top: -6px;
+    right: 4px;
+    cursor: pointer;
+    color: white;
+    /* color: red; Customize the color of the delete icon */
+  }
+  
+  .circle {
+    /* width: 10px;
+    height: 10px; */
+    background-color: red;
+    border-radius: 50%;
+  }
+  

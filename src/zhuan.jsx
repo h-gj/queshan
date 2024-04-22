@@ -3,6 +3,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import { Link } from "react-router-dom";
 import copy from 'copy-to-clipboard';
 import {toPng} from 'html-to-image';
+import AutoCompleteInput from './sug'
 
 
 // Define your component
@@ -19,15 +20,16 @@ const Zhuan = () => { // State to store the fetched data
   const battleRef = useRef(null);
   const [displayBattleInfo, setDisplayBattleInfo] = useState(false);
   const [changDiOptions, setChangDiOptions] = useState(Array.from(Array(14).keys(), n => n + 1));
+  const [names, setNames] = useState([]);
 
   const handleClick = () => {
-    if (inputValue === '') {
-      alert('请先导入接龙或手动填写参赛人员')
-      return
-    }
+    // if (inputValue === '') {
+    //   alert('请先导入接龙或手动填写参赛人员')
+    //   return
+    // }
     setDisplayBattleInfo(true)
-    const values = inputValue.split(/[,\n]+/);
-    const [a, b, c, d, e, f] = values;
+    // const values = inputValue.split(/[,\n]+/);
+    const [a, b, c, d, e, f] = names;
     setA(a)
     setB(b)
     setC(c)
@@ -47,6 +49,7 @@ const Zhuan = () => { // State to store the fetched data
 9. ${b} & ${f} 🆚 ${e} & ${d}
     `
     copy(text)
+    console.log('copppppppppp', names);
     alert('复制成功')
   }
 
@@ -69,6 +72,7 @@ const Zhuan = () => { // State to store the fetched data
       console.log(`${name}`);
     });
     setInputValue(names.join('\n'))
+    setNames(names);
     return names
 
   }
@@ -181,7 +185,10 @@ const Zhuan = () => { // State to store the fetched data
         ></textarea>
       </p>
 
-      <p class="ZhuanP"> 
+      <p class="ZhuanP">
+        <AutoCompleteInput preSelectedItems={names} setNames={setNames}/>
+      </p>
+      {/* <p class="ZhuanP"> 
         <textarea 
         // style={{textAlign: " center"}}
         placeholder="请输入参赛人员，一行一个，目前只支持6人转" 
@@ -190,9 +197,9 @@ const Zhuan = () => { // State to store the fetched data
         onChange={(e) => setInputValue(e.target.value)}
         value={inputValue}
         ></textarea>
-      </p>
+      </p> */}
       
-      <p>
+      <p class="ZhuanP">
         <button class="ZhuanFuncButton" onClick={handleConvertToImage}>生成并导出对阵表</button>
         <button class="ZhuanFuncButton" onClick={handleClick}>生成并复制对阵表</button>&nbsp;&nbsp;
       </p>
